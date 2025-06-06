@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  body {
+    background-color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    color: #1F2937;
+  }
+
+  .form-container {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #ffffff;
+    padding: 40px 35px;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(249, 115, 22, 0.15);
+    animation: fadeInUp 0.7s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  h2 {
+    color: #F97316;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 26px;
+    font-weight: 700;
+  }
+
+  form label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+    color: #374151;
+  }
+
+  form p {
+    margin-bottom: 20px;
+  }
+
+  input, textarea, select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 8px;
+    background-color: #F9FAFB;
+    font-size: 15px;
+    transition: all 0.3s ease;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #F97316;
+    background-color: #fff;
+    box-shadow: 0 0 6px rgba(249, 115, 22, 0.4);
+  }
+
+  .errorlist {
+    color: #e11d48;
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  button {
+    width: 100%;
+    padding: 14px;
+    background-color: #F97316;
+    color: #fff;
+    font-weight: 700;
+    font-size: 17px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 6px 15px rgba(249, 115, 22, 0.4);
+  }
+
+  button:hover {
+    background-color: #fb923c;
+    transform: translateY(-2px);
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<div class="form-container">
+  <h2>Book Webinar: {{ webinar.title }}</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Book Now</button>
+  </form>
+</div>
+{% endblock %}

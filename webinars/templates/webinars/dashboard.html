@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #fff; /* white background */
+            color: #333; /* charcoal text */
+        }
+
+        header {
+            background-color: #ff6f00; /* orange */
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 28px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            animation: fadeInDown 1s ease forwards;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .card {
+            background-color: #fff;
+            border-left: 6px solid #ff6f00;
+            padding: 25px 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-radius: 10px;
+            animation: fadeInUp 0.8s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        /* Animate cards stagger */
+        .card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+        .card:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+        .card:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .card h2 {
+            margin-bottom: 15px;
+            color: #ff6f00;
+            font-weight: 600;
+            font-size: 22px;
+        }
+
+        .card p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        a.button {
+            display: inline-block;
+            background-color: #333; /* charcoal */
+            color: white;
+            padding: 12px 28px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        a.button:hover {
+            background-color: #555;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    Welcome, {{ request.user.first_name }}!
+    <div style="font-weight:400; font-size: 16px; margin-top:4px; color:#fffdd0;">
+      Here’s your dashboard overview.
+      <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</header>
+
+<div class="container">
+    <div class="card">
+    <h2>📅 My Booked Webinars</h2>
+    {% if bookings %}
+        <ul>
+            {% for booking in bookings %}
+                <li><strong>{{ booking.webinar.title }}</strong> – {{ booking.webinar.date }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You haven't booked any webinars yet.</p>
+    {% endif %}
+    <a href="{% url 'webinar_list' %}" class="button">Explore Webinars</a>
+</div>
+
+
+    <div class="card">
+        <h2>👤 My Profile</h2>
+        <p>View or update your personal info.</p>
+       <a href="{% url 'profile' %}" class="button">Go to Profile</a>
+
+    </div>
+
+    <div class="card">
+        <h2>🚪 Logout</h2>
+        <a href="{% url 'logout' %}" class="button">Logout</a>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

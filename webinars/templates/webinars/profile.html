@@ -1,0 +1,147 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Profile</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #fff;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: #ff6f00;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: 600;
+    }
+
+    .profile-container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #fff;
+      border-left: 6px solid #ff6f00;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .edit-icon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #ff6f00;
+      color: white;
+      border-radius: 50%;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .edit-icon:hover {
+      background-color: #e05f00;
+    }
+
+    form label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .profile-input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      color: #555;
+    }
+
+    .profile-input[readonly] {
+      background-color: #f0f0f0;
+      border: none;
+      color: #444;
+    }
+
+    .save-button {
+      background-color: #333;
+      color: white;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      display: none;
+    }
+
+    .save-button:hover {
+      background-color: #555;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #ff6f00;
+      text-decoration: none;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+<header>My Profile</header>
+
+<div class="profile-container">
+  <form method="POST">
+    {% csrf_token %}
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color: green;">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    {% for field in form %}
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+      {{ field|add_class:"profile-input" }}
+      {% if field.errors %}
+        <small style="color: red;">{{ field.errors }}</small>
+      {% endif %}
+    {% endfor %}
+    <button type="submit" class="save-button">Save Changes</button>
+  </form>
+
+  <div class="edit-icon" onclick="enableEdit()">
+    <i class="fas fa-pen"></i>
+  </div>
+</div>
+
+<a href="{% url 'dashboard' %}" class="back-link">← Back to Dashboard</a>
+
+<script>
+  // Add read-only initially
+  window.onload = function () {
+    document.querySelectorAll('.profile-input').forEach(input => {
+      input.setAttribute('readonly', true);
+    });
+  };
+
+  function enableEdit() {
+    document.querySelectorAll('.profile-input').forEach(input => {
+      input.removeAttribute('readonly');
+    });
+    document.querySelector('.save-button').style.display = 'inline-block';
+    document.querySelector('.edit-icon').style.display = 'none';
+  }
+</script>
+
+</body>
+</html>

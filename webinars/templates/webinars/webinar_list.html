@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block extra_head %}
+<style>
+  .webinar-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 30px;
+  }
+
+  .webinar-card {
+    background-color: #fff;
+    padding: 24px 20px;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border: 1px solid #E5E7EB;
+    animation: fadeInUp 0.8s ease forwards;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .webinar-card:hover,
+  .webinar-card:focus-within {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+  }
+
+  /* Stagger animation delay for each card */
+  .webinar-card:nth-child(1) { animation-delay: 0.15s; }
+  .webinar-card:nth-child(2) { animation-delay: 0.3s; }
+  .webinar-card:nth-child(3) { animation-delay: 0.45s; }
+  .webinar-card:nth-child(4) { animation-delay: 0.6s; }
+  /* Add more if you have more cards */
+
+  .webinar-card h2 {
+    color: #F97316; /* orange */
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+
+  .webinar-card p {
+    margin-bottom: 12px;
+    font-size: 1rem;
+    color: #374151; /* charcoal */
+    flex-grow: 1;
+  }
+
+  .view-details-btn {
+    align-self: flex-start;
+    padding: 12px 20px;
+    background-color: #F97316;
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px #F97316AA;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .view-details-btn:hover,
+  .view-details-btn:focus-visible {
+    background-color: #e65c00; /* darker orange */
+    box-shadow: 0 6px 16px #e65c00AA;
+    outline: none;
+  }
+
+  .no-webinars {
+    margin-top: 60px;
+    font-size: 1.125rem;
+    color: #6B7280; /* cool gray */
+    text-align: center;
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 480px) {
+    .webinar-list {
+      grid-template-columns: 1fr;
+      margin-top: 20px;
+    }
+    .webinar-card {
+      padding: 20px 15px;
+    }
+    .webinar-card h2 {
+      font-size: 1.4rem;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+  <h1 class="page-title" style="color: #F97316; font-weight: 700; font-size: 2.5rem; margin-bottom: 32px; text-align: center;">
+    Available Webinars
+  </h1>
+
+  <section class="webinar-list" aria-live="polite" aria-label="List of available webinars">
+    {% for webinar in webinars %}
+      <article class="webinar-card" tabindex="0" aria-labelledby="webinar-title-{{ webinar.id }}">
+        <h2 id="webinar-title-{{ webinar.id }}">{{ webinar.title }}</h2>
+        <p>{{ webinar.description|truncatechars:150 }}</p>
+        <p><strong>Date:</strong> {{ webinar.date }}</p>
+        <a href="{% url 'webinar_detail' webinar.id %}" class="view-details-btn" aria-label="View details of {{ webinar.title }}">
+          View Details
+        </a>
+      </article>
+    {% empty %}
+      <p class="no-webinars">No webinars available at the moment.</p>
+    {% endfor %}
+  </section>
+{% endblock %}

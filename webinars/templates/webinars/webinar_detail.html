@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ webinar.title }}</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #ffffff;
+      color: #1F2937; /* Charcoal */
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 50px auto;
+      padding: 40px 30px;
+      background-color: #fff;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      transition: box-shadow 0.3s ease;
+    }
+    .container:hover {
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    }
+
+    h1 {
+      color: #F97316; /* Orange */
+      font-weight: 700;
+      font-size: 2.8rem;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    p.description {
+      font-size: 1.125rem;
+      color: #374151; /* Darker charcoal */
+      margin-bottom: 25px;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    p.date {
+      font-weight: 600;
+      color: #F97316;
+      font-size: 1rem;
+      text-align: center;
+      margin-bottom: 40px;
+      letter-spacing: 0.05em;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      color: #F97316;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #fb923c;
+      padding-bottom: 8px;
+      font-weight: 600;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    input, textarea, select {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      padding: 14px 16px;
+      border-radius: 8px;
+      border: 1.5px solid #E5E7EB;
+      background-color: #F9FAFB;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      box-sizing: border-box;
+      resize: vertical;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #F97316;
+      box-shadow: 0 0 8px #F97316AA;
+      background-color: #fff;
+    }
+
+    button {
+      background-color: #F97316;
+      color: white;
+      font-weight: 700;
+      padding: 16px 0;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.125rem;
+      box-shadow: 0 4px 12px #F97316AA;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    button:hover {
+      background-color: #fb923c;
+      box-shadow: 0 6px 16px #fb923cAA;
+    }
+    button:active {
+      transform: scale(0.98);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .container {
+        margin: 30px 20px;
+        padding: 30px 20px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" role="main" aria-labelledby="webinar-title">
+    <h1 id="webinar-title">{{ webinar.title }}</h1>
+    <p class="description">{{ webinar.description }}</p>
+    <p class="date"><strong>Date:</strong> {{ webinar.date }}</p>
+
+    <h2>Book this Webinar</h2>
+    <form method="post" aria-label="Webinar booking form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" aria-live="polite">Book Now</button>
+    </form>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #ffffff;
+    color: #1F2937;
+  }
+
+  .confirmation-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    animation: fadeIn 0.7s ease-out forwards;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  h2 {
+    text-align: center;
+    color: #F97316;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 30px;
+  }
+
+  .webinar-card {
+    background-color: #F9FAFB;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1.5px solid #E5E7EB;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+  }
+
+  .webinar-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  }
+
+  .webinar-title {
+    color: #F97316;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .webinar-detail {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+
+  .back-btn {
+    display: block;
+    width: fit-content;
+    margin: 30px auto 0;
+    padding: 12px 20px;
+    background-color: #F97316;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
+    transition: background-color 0.3s ease;
+  }
+
+  .back-btn:hover {
+    background-color: #fb923c;
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<div class="confirmation-container">
+  <h2>You’ve Already Booked This Webinar</h2>
+
+<p><strong>Title:</strong> {{ webinar.title }}</p>
+<p><strong>Date:</strong> {{ webinar.date }}</p>
+<p><strong>Time:</strong> {{ webinar.time }}</p>
+
+  <a href="{% url 'dashboard' %}" class="back-btn">Back to Dashboard</a>
+</div>
+{% endblock %}

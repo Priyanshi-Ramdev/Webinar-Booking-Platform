@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+  }
+
+  .dashboard-header {
+    background-color: #ff6600;
+    padding: 20px;
+    color: white;
+    text-align: center;
+  }
+
+  .dashboard-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .dashboard-container h2 {
+    text-align: center;
+    color: #1F2937;
+    margin-bottom: 30px;
+  }
+
+  .webinar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 24px;
+  }
+
+  .webinar-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease;
+  }
+
+  .webinar-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .webinar-card h3 {
+    color: #ff6600;
+    margin-bottom: 12px;
+    font-size: 20px;
+  }
+
+  .webinar-card p {
+    margin: 6px 0;
+    font-size: 15px;
+    color: #333;
+  }
+
+  .btn-orange {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 10px 16px;
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  }
+
+  .btn-orange:hover {
+    background-color: #e65c00;
+  }
+
+  .btn-red {
+    background-color: #dc2626;
+    margin-top: 10px;
+  }
+
+  .btn-red:hover {
+    background-color: #b91c1c;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    transition: 0.3s ease;
+  }
+
+  .status-booked {
+    background-color: #d1fae5;
+    color: #065f46;
+  }
+
+  .status-cancelled {
+    background-color: #fee2e2;
+    color: #991b1b;
+  }
+
+  .no-bookings {
+    text-align: center;
+    font-size: 1.1em;
+    color: #777;
+    padding: 40px 0;
+  }
+</style>
+
+<div class="dashboard-header">
+  <h1>Welcome, {{ request.user.username }}!</h1>
+  <p>Your personalized dashboard</p>
+</div>
+
+<div class="dashboard-container">
+  <h2>Your Booked Webinars</h2>
+
+  {% if bookings %}
+    <div class="webinar-grid">
+      {% for booking in bookings %}
+        <div class="webinar-card">
+          <h3>{{ booking.webinar.title }}</h3>
+          <p><strong>Date:</strong> {{ booking.webinar.date }}</p>
+          <p><strong>Time:</strong> {{ booking.webinar.time }}</p>
+
+          <p><strong>Status:</strong>
+            {% if booking.status == 'booked' %}
+              <span class="status-badge status-booked">Confirmed</span>
+            {% elif booking.status == 'cancelled' %}
+              <span class="status-badge status-cancelled">Cancelled</span>
+            {% else %}
+              <span class="status-badge">Unknown</span>
+            {% endif %}
+          </p>
+
+          <a href="{% url 'webinar_detail' booking.webinar.id %}" class="btn-orange">
+            <i class="fas fa-eye"></i> View Details
+          </a>
+
+          {% if booking.status == 'booked' and booking.webinar.meet_link and booking.webinar.date <= today %}
+            <a href="{{ booking.webinar.meet_link }}" target="_blank" class="btn-orange">
+              <i class="fas fa-video"></i> Join Webinar
+            </a>
+          {% endif %}
+
+          <form action="{% url 'cancel_booking' booking.id %}" method="POST" style="margin-top: 10px;">
+            {% csrf_token %}
+            <button type="submit" class="btn-orange btn-red">
+              <i class="fas fa-times-circle"></i> Cancel Booking
+            </button>
+          </form>
+
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="no-bookings">You haven't booked any webinars yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,738 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>WebinarHub | Learn from the Best</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* Reset & basics */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fff;
+            color: #333;
+            overflow-x: hidden;
+        }
+        a {
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* NAVBAR */
+        nav {
+            background-color: #ff6f00;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 60px;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        nav .logo {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+        nav ul li a {
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+        nav ul li a:hover {
+            color: #ffe0b2;
+            text-decoration: underline;
+        }
+
+        /* HERO */
+        .hero {
+            background: url("{% static 'images/bg.png' %}") no-repeat center center/cover;
+            height: 95vh;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            animation: fadeIn 2s ease-in-out;
+        }
+        .hero h1 {
+            font-size: 70px;
+            font-weight: 700;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            margin-bottom: 15px;
+        }
+        .hero .typing-text {
+            font-size: 28px;
+            font-weight: 500;
+            height: 36px;
+            margin-bottom: 30px;
+            color: #ffd180;
+            min-height: 40px;
+        }
+        .hero p {
+            font-size: 22px;
+            font-weight: 400;
+            margin-bottom: 40px;
+            max-width: 600px;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
+        }
+        .hero .btn-group a {
+            background-color: white;
+            color: #ff6f00;
+            padding: 14px 40px;
+            margin: 0 12px;
+            font-weight: 700;
+            border-radius: 50px;
+            box-shadow: 0 6px 15px rgba(255,111,0,0.4);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .hero .btn-group a:hover {
+            background-color: #ffe0b2;
+            transform: scale(1.05);
+        }
+
+        /* FEATURES */
+        .features {
+            padding: 70px 40px;
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            animation: fadeInUp 1.5s ease-in-out;
+        }
+        .feature-card {
+            background: #fff;
+            border-left: 7px solid #ff6f00;
+            padding: 30px 25px 25px 25px;
+            box-shadow: 0 10px 18px rgba(0,0,0,0.06);
+            border-radius: 12px;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            cursor: default;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px rgba(255,111,0,0.3);
+        }
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .feature-card h3 i {
+            font-size: 28px;
+            color: #ff6f00;
+        }
+        .feature-card p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* HOW IT WORKS */
+        .how-it-works {
+            background: #fff8e1;
+            padding: 70px 40px;
+            text-align: center;
+            max-width: 1000px;
+            margin: 70px auto;
+            border-radius: 20px;
+            box-shadow: 0 6px 20px rgba(255,111,0,0.2);
+            animation: fadeInUp 1.8s ease-in-out;
+        }
+        .how-it-works h2 {
+            font-size: 38px;
+            font-weight: 700;
+            margin-bottom: 35px;
+            color: #ff6f00;
+        }
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+        }
+        .step {
+            background: white;
+            flex: 1 1 240px;
+            border-radius: 15px;
+            padding: 30px 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+            cursor: default;
+        }
+        .step:hover {
+            box-shadow: 0 12px 25px rgba(255,111,0,0.3);
+        }
+        .step i {
+            font-size: 40px;
+            color: #ff6f00;
+            margin-bottom: 18px;
+        }
+        .step h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+        .step p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        /* UPCOMING WEBINARS */
+        .upcoming-webinars {
+            padding: 70px 40px;
+            max-width: 1200px;
+            margin: auto;
+            animation: fadeInUp 1.8s ease-in-out;
+        }
+        .upcoming-webinars h2 {
+            font-size: 38px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #ff6f00;
+        }
+        .webinar-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .webinar-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .webinar-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 15px 25px rgba(255,111,0,0.3);
+        }
+        .webinar-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+        }
+        .webinar-content {
+            padding: 20px 25px;
+        }
+        .webinar-content h3 {
+            font-size: 22px;
+            margin-bottom: 8px;
+            color: #ff6f00;
+        }
+        .webinar-content p {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 15px;
+            min-height: 48px;
+        }
+        .webinar-content .btn {
+            background-color: #ff6f00;
+            color: white;
+            padding: 10px 22px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+        }
+        .webinar-content .btn:hover {
+            background-color: #e65100;
+        }
+
+        /* TESTIMONIALS */
+        .testimonial-section {
+            background: #f5f5f5;
+            padding: 70px 30px 90px 30px;
+            max-width: 900px;
+            margin: 90px auto;
+            text-align: center;
+            border-radius: 25px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            animation: fadeInUp 2s ease-in-out;
+        }
+        .testimonial-section h2 {
+            font-size: 38px;
+            margin-bottom: 50px;
+            color: #ff6f00;
+            font-weight: 700;
+        }
+        .testimonial-cards {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            gap: 40px;
+            padding-bottom: 15px;
+        }
+        .testimonial-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+            padding: 30px 25px;
+            min-width: 280px;
+            flex: 0 0 auto;
+            position: relative;
+        }
+        .testimonial-card p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        .testimonial-card .user {
+            font-weight: 600;
+            color: #ff6f00;
+            font-size: 18px;
+        }
+
+        /* NEWSLETTER */
+        .newsletter {
+            background: #ff6f00;
+            color: white;
+            padding: 50px 25px;
+            text-align: center;
+            border-radius: 0 0 0 80px;
+            max-width: 1000px;
+            margin: 80px auto 0 auto;
+            box-shadow: 0 8px 35px rgba(255,111,0,0.4);
+            animation: fadeIn 2s ease;
+        }
+
+        .step:hover {
+        transform: translateY(-5px);
+        }
+
+        .newsletter h2 {
+            font-size: 34px;
+            margin-bottom: 18px;
+            font-weight: 700;
+        }
+        .newsletter p {
+            font-size: 18px;
+            margin-bottom: 28px;
+            font-weight: 500;
+        }
+        .newsletter form {
+            display: flex;
+            justify-content: center;
+            max-width: 600px;
+            margin: auto;
+        }
+        .newsletter input[type="email"] {
+            flex: 1;
+            padding: 15px 20px;
+            font-size: 16px;
+            border-radius: 50px 0 0 50px;
+            border: none;
+            outline: none;
+        }
+        .newsletter button {
+            background-color: #fff3e0;
+            color: #ff6f00;
+            border: none;
+            font-weight: 700;
+            font-size: 16px;
+            padding: 0 30px;
+            border-radius: 0 50px 50px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .newsletter button:hover {
+            background-color: #ffe0b2;
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 60px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+        }
+        footer .footer-section {
+            flex: 1 1 220px;
+            min-width: 200px;
+        }
+        footer h4 {
+            font-size: 20px;
+            margin-bottom: 18px;
+            font-weight: 700;
+            color: #ff6f00;
+        }
+        footer ul {
+            list-style: none;
+        }
+        footer ul li {
+            margin-bottom: 12px;
+        }
+        footer ul li a {
+            color: white;
+            font-size: 15px;
+            transition: color 0.3s ease;
+        }
+        footer ul li a:hover {
+            color: #ff6f00;
+        }
+        footer .social-icons {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        footer .social-icons a {
+            font-size: 24px;
+            color: white;
+            transition: color 0.3s ease;
+        }
+        footer .social-icons a:hover {
+            color: #ff6f00;
+        }
+        footer p {
+            font-size: 14px;
+            margin-top: 30px;
+            text-align: center;
+            width: 100%;
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            nav {
+                padding: 15px 30px;
+            }
+            .hero h1 {
+                font-size: 45px;
+            }
+            .hero .typing-text {
+                font-size: 20px;
+                min-height: 30px;
+            }
+            .features {
+                padding: 50px 20px;
+            }
+            .how-it-works {
+                margin: 50px 15px;
+                padding: 40px 25px;
+            }
+            .upcoming-webinars {
+                padding: 50px 15px;
+            }
+            .testimonial-section {
+                padding: 50px 15px 70px 15px;
+                margin: 70px 15px;
+            }
+            footer {
+                padding: 40px 30px;
+                flex-direction: column;
+                gap: 30px;
+                text-align: center;
+            }
+            footer .footer-section {
+                min-width: auto;
+            }
+            .newsletter {
+                margin: 50px 15px 0 15px;
+                padding: 40px 20px;
+                border-radius: 0 0 0 40px;
+            }
+            .newsletter form {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .newsletter input[type="email"], .newsletter button {
+                border-radius: 50px;
+                width: 100%;
+            }
+            .newsletter button {
+                padding: 15px 0;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">WebinarHub</div>
+    <ul>
+        <li><a href="{% url 'homepage' %}">Home</a></li>
+        <li><a href="{% url 'webinar_list' %}">Webinars</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+            <li><a href="{% url 'signup' %}">Signup</a></li>
+        {% endif %}
+        
+    </ul>
+</nav>
+
+<section class="hero">
+    <h1>Learn from the Best</h1>
+    <div class="typing-text" id="typing-text"></div>
+    <p>Join thousands of learners worldwide with live interactive webinars and exclusive courses tailored for you.</p>
+    <div class="btn-group">
+        <a href="{% url 'signup' %}">Get Started</a>
+        <a href="#features" style="background:#ffd180;color:#ff6f00;">Explore Features</a>
+    </div>
+</section>
+
+<section class="features" id="features">
+    <div class="feature-card">
+        <h3><i class="fa-solid fa-chalkboard-user"></i> Expert Speakers</h3>
+        <p>Learn directly from industry leaders and professionals who know their craft.</p>
+    </div>
+    <div class="feature-card">
+        <h3><i class="fa-solid fa-video"></i> High-Quality Live Streaming</h3>
+        <p>Experience seamless HD webinars with real-time interaction and Q&A.</p>
+    </div>
+    <div class="feature-card">
+        <h3><i class="fa-solid fa-calendar-check"></i> Easy Booking</h3>
+        <p>Book your seat in seconds and receive timely reminders.</p>
+    </div>
+    <div class="feature-card">
+        <h3><i class="fa-solid fa-certificate"></i> Certificates</h3>
+        <p>Get recognized for your learning with official certificates after course completion.</p>
+    </div>
+    <div class="feature-card">
+        <h3><i class="fa-solid fa-mobile-screen-button"></i> Mobile Friendly</h3>
+        <p>Attend webinars anywhere, anytime on your phone or tablet.</p>
+    </div>
+    <div class="feature-card">
+        <h3><i class="fa-solid fa-headset"></i> 24/7 Support</h3>
+        <p>Our team is always ready to assist you with any queries.</p>
+    </div>
+</section>
+
+<section class="how-it-works" id="how-it-works" style="padding: 60px 20px; background-color: #fff;">
+    <h2 style="text-align: center; font-size: 36px; color: #FF6B00; margin-bottom: 40px; font-weight: bold;">
+        How It Works
+    </h2>
+    <div class="steps" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">
+        
+        <div class="step" style="width: 250px; text-align: center; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.3s; background-color: #fdfdfd;">
+            <i class="fa-solid fa-user-plus" style="font-size: 48px; color: #FF6B00; margin-bottom: 15px;"></i>
+            <h3 style="font-size: 22px; color: #333;">Create an Account</h3>
+            <p style="font-size: 15px; color: #555;">Sign up easily using your email or social login.</p>
+            <a href="{% url 'signup' %}" style="display: inline-block; margin-top: 10px; color: #FF6B00; text-decoration: none;">Sign Up →</a>
+        </div>
+
+        <div class="step" style="width: 250px; text-align: center; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.3s; background-color: #fdfdfd;">
+            <i class="fa-solid fa-calendar" style="font-size: 48px; color: #FF6B00; margin-bottom: 15px;"></i>
+            <h3 style="font-size: 22px; color: #333;">Book Webinars</h3>
+            <p style="font-size: 15px; color: #555;">Browse the schedule and reserve your spot with a simple click.</p>
+            <a href="{% url 'webinar_list' %}" style="display: inline-block; margin-top: 10px; color: #FF6B00; text-decoration: none;">Browse Webinars →</a>
+        </div>
+
+        <div class="step" style="width: 250px; text-align: center; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.3s; background-color: #fdfdfd;">
+            <i class="fa-solid fa-video" style="font-size: 48px; color: #FF6B00; margin-bottom: 15px;"></i>
+            <h3 style="font-size: 22px; color: #333;">Join Live Sessions</h3>
+            <p style="font-size: 15px; color: #555;">Attend live webinars and interact with experts in real-time.</p>
+        </div>
+
+        <div class="step" style="width: 250px; text-align: center; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.3s; background-color: #fdfdfd;">
+            <i class="fa-solid fa-graduation-cap" style="font-size: 48px; color: #FF6B00; margin-bottom: 15px;"></i>
+            <h3 style="font-size: 22px; color: #333;">Learn & Grow</h3>
+            <p style="font-size: 15px; color: #555;">Access recordings, materials, and get certificates.</p>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- <section class="upcoming-webinars" id="upcoming-webinars">
+    <h2>Upcoming Webinars</h2>
+    <div class="webinar-cards">
+        <div class="webinar-card">
+            <img src="{% static 'images/webinar1.jpg' %}" alt="Webinar 1" />
+            <div class="webinar-content">
+                <h3>Mastering Python</h3>
+                <p>Join expert John Doe on mastering Python for data science.</p>
+                <a href="#" class="btn">Book Now</a>
+            </div>
+        </div>
+        <div class="webinar-card">
+            <img src="{% static 'images/webinar2.jpg' %}" alt="Webinar 2" />
+            <div class="webinar-content">
+                <h3>Effective Public Speaking</h3>
+                <p>Learn the art of public speaking with Jane Smith.</p>
+                <a href="#" class="btn">Book Now</a>
+            </div>
+        </div>
+        <div class="webinar-card">
+            <img src="{% static 'images/webinar3.jpg' %}" alt="Webinar 3" />
+            <div class="webinar-content">
+                <h3>Digital Marketing Basics</h3>
+                <p>Understand core marketing strategies to grow your business.</p>
+                <a href="#" class="btn">Book Now</a>
+            </div>
+        </div>
+    </div>
+</section> -->
+<section class="upcoming-webinars" id="upcoming-webinars" style="padding: 60px 0; background-color: #fff;">
+  <h2 style="text-align: center; font-size: 2.8em; color: #ff6600; margin-bottom: 20px;">Upcoming Webinars</h2>
+  <p style="text-align: center; color: #555; font-size: 1.1em;">Explore the latest expert-led sessions designed to boost your knowledge and skills.</p>
+
+  <div class="webinar-cards" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; margin-top: 50px;">
+
+    {% for webinar in webinars %}
+    <div class="webinar-card" style="width: 300px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.1); transition: transform 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      
+      {% if webinar.image %}
+      <img src="{{ webinar.image.url }}" alt="{{ webinar.title }}" style="width: 100%; height: 200px; object-fit: cover;">
+      {% else %}
+      <img src="{% static 'images/default.png' %}" alt="Default Image" style="width: 100%; height: 200px; object-fit: cover;">
+      {% endif %}
+
+      <div class="webinar-content" style="padding: 20px;">
+        <h3 style="font-size: 1.4em; margin-bottom: 10px; color: #333;">{{ webinar.title }}</h3>
+        <p style="font-size: 1em; color: #666; margin-bottom: 15px;">{{ webinar.description|truncatewords:20 }}</p>
+        <a href="{% url 'webinar_detail' webinar.id %}" style="display: inline-block; padding: 10px 20px; background-color: #ff6600; color: white; border-radius: 6px; text-decoration: none; font-weight: bold;">Book Now</a>
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+</section>
+
+
+
+<section class="testimonial-section" id="testimonials">
+    <h2>What Our Learners Say</h2>
+    <div class="testimonial-cards">
+        <div class="testimonial-card">
+            <p>"WebinarHub changed my career path. The webinars are top-notch and easy to follow."</p>
+            <div class="user">- Rahul M.</div>
+        </div>
+        <div class="testimonial-card">
+            <p>"The booking system is smooth and the live interaction really helps me understand better."</p>
+            <div class="user">- Priya S.</div>
+        </div>
+        <div class="testimonial-card">
+            <p>"I loved the certificates after finishing courses — great motivation to keep learning."</p>
+            <div class="user">- Ankit K.</div>
+        </div>
+    </div>
+</section>
+
+<section class="newsletter" id="newsletter">
+    <h2>Stay Updated</h2>
+    <p>Subscribe to our newsletter for the latest webinar updates and offers.</p>
+    <form action="#" method="post">
+        <input type="email" placeholder="Enter your email" required />
+        <button type="submit">Subscribe</button>
+    </form>
+</section>
+
+<footer>
+    <div class="footer-section">
+        <h4>About WebinarHub</h4>
+        <p>Your trusted platform to learn from the best experts worldwide through live webinars and courses.</p>
+    </div>
+    <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Webinars</a></li>
+            <li><a href="#">Courses</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>
+    <div class="footer-section">
+        <h4>Contact Us</h4>
+        <p>Email: support@webinarhub.com</p>
+        <p>Phone: +1 234 567 890</p>
+        <div class="social-icons">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+    </div>
+    <p>&copy; 2025 WebinarHub. All rights reserved.</p>
+</footer>
+
+<script>
+    // Typing text animation for hero section
+    const typingTexts = [
+        "Live Interactive Webinars",
+        "Exclusive Online Courses",
+        "Learn Anytime, Anywhere",
+        "Join Our Global Community"
+    ];
+    const typingElement = document.getElementById("typing-text");
+    let index = 0;
+    let charIndex = 0;
+    let typingDelay = 100;
+    let erasingDelay = 50;
+    let newTextDelay = 2000;
+
+    function type() {
+        if (charIndex < typingTexts[index].length) {
+            typingElement.textContent += typingTexts[index].charAt(charIndex);
+            charIndex++;
+            setTimeout(type, typingDelay);
+        } else {
+            setTimeout(erase, newTextDelay);
+        }
+    }
+    function erase() {
+        if (charIndex > 0) {
+            typingElement.textContent = typingTexts[index].substring(0, charIndex - 1);
+            charIndex--;
+            setTimeout(erase, erasingDelay);
+        } else {
+            index++;
+            if (index >= typingTexts.length) index = 0;
+            setTimeout(type, typingDelay + 1100);
+        }
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+        if(typingTexts.length) setTimeout(type, newTextDelay + 250);
+    });
+</script>
+
+</body>
+</html>

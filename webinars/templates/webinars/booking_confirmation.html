@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  .confirmation-container {
+    max-width: 550px;
+    margin: 80px auto;
+    padding: 50px 35px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(255, 102, 0, 0.2);
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    animation: fadeInScale 0.8s ease forwards;
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  .confirmation-container h2 {
+    font-size: 30px;
+    color: #ff6600;
+    margin-bottom: 20px;
+    font-weight: 800;
+  }
+
+  .confirmation-container p {
+    font-size: 17px;
+    color: #333;
+    margin: 10px 0;
+    line-height: 1.6;
+  }
+
+  .dashboard-btn, .home-btn {
+    display: inline-block;
+    margin: 25px 10px 0;
+    padding: 12px 30px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .dashboard-btn {
+    background-color: #1F2937;
+    color: #fff;
+  }
+
+  .dashboard-btn:hover {
+    background-color: #374151;
+    transform: translateY(-3px);
+  }
+
+  .home-btn {
+    background-color: transparent;
+    border: 2px solid #ff6600;
+    color: #ff6600;
+  }
+
+  .home-btn:hover {
+    background-color: #ff6600;
+    color: white;
+    transform: translateY(-3px);
+  }
+
+  @keyframes fadeInScale {
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+</style>
+
+<div class="confirmation-container">
+  <h2>🎉 Booking Confirmed!</h2>
+  <p><strong>Webinar:</strong> {{ booking.webinar.title }}</p>
+  <p><strong>Date:</strong> {{ booking.webinar.date }}</p>
+  <p><strong>Your Email:</strong> {{ booking.user.email }}</p>
+
+  <a href="{% url 'dashboard' %}" class="dashboard-btn">Go to Dashboard</a>
+  <a href="{% url 'homepage' %}" class="home-btn">Back to Home</a>
+</div>
+{% endblock %}
